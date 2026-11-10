@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView android:id="@+id/bg" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" android:src="@drawable/pm_widget_shape"/>
+    <GridLayout android:layout_width="match_parent" android:layout_height="match_parent" android:columnCount="3" android:rowCount="3" android:padding="7dp">
+        <TextView android:id="@+id/q1" style="@style/PmQuickTile" android:text="＋&#10;Заметка"/>
+        <TextView android:id="@+id/q2" style="@style/PmQuickTile" android:text="▦&#10;Календарь"/>
+        <TextView android:id="@+id/q3" style="@style/PmQuickTile" android:text="☏&#10;Чаты"/>
+        <TextView android:id="@+id/q4" style="@style/PmQuickTile" android:text="▤&#10;Заметки"/>
+        <TextView android:id="@+id/q5" style="@style/PmQuickTile" android:text="⌂&#10;Сегодня"/>
+        <TextView android:id="@+id/q6" style="@style/PmQuickTile" android:text="✓&#10;Задача"/>
+        <TextView android:id="@+id/q7" style="@style/PmQuickTile" android:text="⌕&#10;Поиск"/>
+        <TextView android:id="@+id/q8" style="@style/PmQuickTile" android:text="♧&#10;Группы"/>
+        <TextView android:id="@+id/q9" style="@style/PmQuickTile" android:text="☺&#10;Профиль"/>
+    </GridLayout>
+</FrameLayout>
