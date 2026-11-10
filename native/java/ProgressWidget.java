@@ -20,8 +20,7 @@ public class ProgressWidget extends AppWidgetProvider {
             v.setTextViewText(R.id.pct, p + "%");
             boolean complete = n > 0 && p >= 100;
             v.setViewVisibility(R.id.done_check, complete ? View.VISIBLE : View.GONE);
-            if (complete) v.setTextColor(R.id.pct, Color.rgb(75, 226, 138));
-            else v.setTextColor(R.id.pct, Color.rgb(255, 196, 0));
+            v.setTextColor(R.id.pct, complete ? Color.rgb(75, 226, 138) : Color.rgb(255, 196, 0));
             v.setTextViewText(R.id.ps, n > 0 ? d + " из " + n + " выполнено" : "На сегодня задач нет");
             v.setProgressBar(R.id.pb, 100, p, false);
             v.setOnClickPendingIntent(R.id.root, PmData.link(c, "home", 60));

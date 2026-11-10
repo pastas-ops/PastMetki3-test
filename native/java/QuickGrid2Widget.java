@@ -11,9 +11,9 @@ public class QuickGrid2Widget extends AppWidgetProvider {
             RemoteViews v = new RemoteViews(c.getPackageName(), R.layout.widget_quick_grid2);
             PmData.applyBg(c, v, id);
             v.setOnClickPendingIntent(R.id.q1, PmData.link(c, "new/note", 81));
-            v.setOnClickPendingIntent(R.id.q2, PmData.link(c, "calendar", 82));
-            v.setOnClickPendingIntent(R.id.q3, PmData.link(c, "chats", 83));
-            v.setOnClickPendingIntent(R.id.q4, PmData.link(c, "notes", 84));
+            v.setOnClickPendingIntent(R.id.q2, PmData.link(c, "new/task", 82));
+            v.setOnClickPendingIntent(R.id.q3, PmData.link(c, "calendar", 83));
+            v.setOnClickPendingIntent(R.id.q4, PmData.link(c, "chats", 84));
             m.updateAppWidget(id, v);
         }
     }

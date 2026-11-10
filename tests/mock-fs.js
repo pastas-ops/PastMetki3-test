@@ -17,3 +17,4 @@ export const arrayUnion=(...v)=>({__au:v});
 export const updateDoc=async(r,v)=>{const o={...(st.db[r.path]||{})};for(const k in v){const x=v[k];if(x&&x.__au)o[k]=[...new Set([...(o[k]||[]),...x.__au])];else o[k]=x}st.db[r.path]=o;emit()};
 export const deleteDoc=async r=>{delete st.db[r.path];emit()};
 export const writeBatch=()=>{const ops=[];return{set:(r,v,o)=>ops.push(()=>setDoc(r,v,o)),update:(r,v)=>ops.push(()=>updateDoc(r,v)),delete:r=>ops.push(()=>deleteDoc(r)),commit:async()=>{for(const f of ops)await f()}}};
+export const runTransaction=async(db,fn)=>{const ops=[],tx={get:getDoc,set:(r,v,o)=>ops.push(()=>setDoc(r,v,o)),update:(r,v)=>ops.push(()=>updateDoc(r,v))};const out=await fn(tx);for(const f of ops)await f();return out};

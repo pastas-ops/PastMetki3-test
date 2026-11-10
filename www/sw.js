@@ -12,4 +12,3 @@ self.addEventListener('fetch', e => {
       .catch(() => caches.match(r).then(m => m || caches.match('index.html')))
   );
 });
-

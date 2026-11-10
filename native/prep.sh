@@ -18,4 +18,3 @@ grep -q 'versionName "1.1.0"' android/app/build.gradle
 sed -i 's#</manifest>#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/><uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/></manifest>#' android/app/src/main/AndroidManifest.xml
 grep -q 'android:icon="@mipmap/ic_launcher"' android/app/src/main/AndroidManifest.xml
 chmod +x android/gradlew
-
