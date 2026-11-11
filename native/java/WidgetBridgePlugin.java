@@ -88,7 +88,7 @@ public class WidgetBridgePlugin extends Plugin {
         try { n = new JSONArray(PmData.get(c, "notes")).length(); } catch (Exception e) { }
         AppWidgetManager m = AppWidgetManager.getInstance(c);
         Class<?>[] all = new Class<?>[] { ChatsWidget.class, NotesWidget.class, Notes2Widget.class, Notes4Widget.class, DeadlineWidget.class,
-            QuickWidget.class, Quick2Widget.class, QuickGrid2Widget.class, QuickGrid3Widget.class, PlusWidget.class, ProgressWidget.class, TodayWidget.class };
+            QuickWidget.class, Quick2Widget.class, PlusWidget.class, ProgressWidget.class, TodayWidget.class };
         int w = 0;
         for (Class<?> k : all) w += m.getAppWidgetIds(new ComponentName(c, k)).length;
         JSObject r = new JSObject();

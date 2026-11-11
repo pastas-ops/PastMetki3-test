@@ -1,3 +1,12 @@
+    <!-- Deep links used by widget quick actions and existing notification/widget actions. -->
+    <activity android:name=".MainActivity" android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="pastmetki" />
+        </intent-filter>
+    </activity>
     <receiver android:name=".ChatsWidget" android:exported="true" android:label="@string/pm_w_chats">
         <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
         <meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_chats_info" />
@@ -26,14 +35,8 @@
         <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
         <meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_quick2_info" />
     </receiver>
-    <receiver android:name=".QuickGrid2Widget" android:exported="true" android:label="@string/pm_w_quick_grid2">
-        <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
-        <meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_quick_grid2_info" />
-    </receiver>
-    <receiver android:name=".QuickGrid3Widget" android:exported="true" android:label="@string/pm_w_quick_grid3">
-        <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
-        <meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_quick_grid3_info" />
-    </receiver>
+    <receiver android:name=".QuickGrid2Widget" android:exported="true" android:label="@string/pm_w_quick_grid2"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_quick_grid2_info" /></receiver>
+    <receiver android:name=".QuickGrid3Widget" android:exported="true" android:label="@string/pm_w_quick_grid3"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_quick_grid3_info" /></receiver>
     <receiver android:name=".PlusWidget" android:exported="true" android:label="@string/pm_w_plus">
         <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
         <meta-data android:name="android.appwidget.provider" android:resource="@xml/pm_plus_info" />

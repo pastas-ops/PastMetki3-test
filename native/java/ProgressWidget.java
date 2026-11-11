@@ -3,8 +3,6 @@ package com.pastmetki.app;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.graphics.Color;
-import android.view.View;
 import android.widget.RemoteViews;
 import org.json.JSONObject;
 
@@ -18,9 +16,6 @@ public class ProgressWidget extends AppWidgetProvider {
             RemoteViews v = new RemoteViews(c.getPackageName(), R.layout.widget_progress);
             PmData.applyBg(c, v, id);
             v.setTextViewText(R.id.pct, p + "%");
-            boolean complete = n > 0 && p >= 100;
-            v.setViewVisibility(R.id.done_check, complete ? View.VISIBLE : View.GONE);
-            v.setTextColor(R.id.pct, complete ? Color.rgb(75, 226, 138) : Color.rgb(255, 196, 0));
             v.setTextViewText(R.id.ps, n > 0 ? d + " из " + n + " выполнено" : "На сегодня задач нет");
             v.setProgressBar(R.id.pb, 100, p, false);
             v.setOnClickPendingIntent(R.id.root, PmData.link(c, "home", 60));

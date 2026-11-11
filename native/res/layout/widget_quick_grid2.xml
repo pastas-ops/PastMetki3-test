@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent">
-    <ImageView android:id="@+id/bg" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" android:src="@drawable/pm_widget_shape"/>
-    <GridLayout android:layout_width="match_parent" android:layout_height="match_parent" android:columnCount="2" android:rowCount="2" android:useDefaultMargins="true" android:padding="7dp">
-        <TextView android:id="@+id/q1" style="@style/PmQuickTile" android:background="@drawable/pm_btn_y" android:text="＋&#10;Заметка"/>
-        <TextView android:id="@+id/q2" style="@style/PmQuickTile" android:background="@drawable/pm_btn_b" android:text="✓&#10;Задача"/>
-        <TextView android:id="@+id/q3" style="@style/PmQuickTile" android:background="@drawable/pm_btn_p" android:text="▦&#10;Календарь"/>
-        <TextView android:id="@+id/q4" style="@style/PmQuickTile" android:background="@drawable/pm_btn_g" android:text="☏&#10;Чаты"/>
-    </GridLayout>
+  <ImageView android:id="@+id/bg" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" android:src="@drawable/pm_widget_shape" />
+  <GridLayout android:layout_width="match_parent" android:layout_height="match_parent" android:columnCount="2" android:rowCount="2" android:padding="6dp">
+    <TextView android:id="@+id/qg2_note" style="@style/PmQuickTile" android:background="@drawable/pm_btn_y" android:text="＋\nЗаметка" android:textColor="#000000"/>
+    <TextView android:id="@+id/qg2_task" style="@style/PmQuickTile" android:background="@drawable/pm_btn_b" android:text="✓\nЗадача" android:textColor="#FFFFFF"/>
+    <TextView android:id="@+id/qg2_cal" style="@style/PmQuickTile" android:background="@drawable/pm_btn_p" android:text="▦\nКалендарь" android:textColor="#FFFFFF"/>
+    <TextView android:id="@+id/qg2_chat" style="@style/PmQuickTile" android:background="@drawable/pm_btn_b" android:text="▢\nЧаты" android:textColor="#FFFFFF"/>
+  </GridLayout>
 </FrameLayout>
