@@ -10,7 +10,6 @@
     <string name="pm_w_plus">PastMetka: новая заметка 1×1</string>
     <string name="pm_w_progress">PastMetka: выполнено сегодня 2×1</string>
     <string name="pm_w_today">PastMetka: сегодня 1×2</string>
-    <style name="PmQuickTile"><item name="android:layout_width">0dp</item><item name="android:layout_height">0dp</item><item name="android:layout_rowWeight">1</item><item name="android:layout_columnWeight">1</item><item name="android:layout_margin">3dp</item><item name="android:gravity">center</item><item name="android:textSize">11sp</item><item name="android:textStyle">bold</item><item name="android:singleLine">false</item></style>
-    <string name="pm_w_quick_grid2">PastMetka: быстрые действия 2×2</string>
-    <string name="pm_w_quick_grid3">PastMetka: быстрые действия 3×3</string>
+    <string name="pm_w_quick22">PastMetka: быстрые действия 2×2</string>
+    <string name="pm_w_quick33">PastMetka: быстрые действия 3×3</string>
 </resources>

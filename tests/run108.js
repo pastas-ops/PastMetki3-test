@@ -9,7 +9,7 @@ const seed=(a)=>{const now=Date.now();
  window.__LN=[];window.__SYNC=[];
  window.__FB={user:{uid:'u1',email:'x'},db:{
   'profiles/u1':{name:'Алексей',login:'alex',av:'',inv:'ABC123'},'profiles/u2':{name:'Аня',login:'anya',av:'',inv:'ZZZ'},'profiles/u3':{name:'Борис',login:'boris',av:'',inv:'YYY'},
-  'users/u1':{s:{a:'g',tm:1,th:'dark',nf:1,tz:'Europe/Moscow',lv:'1.0.9'},rd:{},sq:[],hist:[],notes:a.notes},
+  'users/u1':{s:{a:'g',tm:1,th:'dark',nf:1,tz:'Europe/Moscow',lv:'1.0.10'},rd:{},sq:[],hist:[],notes:a.notes},
   'chats/u1|u2':{members:['u1','u2'],on:true,last:{x:'Привет',ts:now-1000,f:'u2'}},
   'chats/u1|u3':{members:['u1','u3'],on:true,last:null},
   'chats/u1|u2/msgs/m0':{f:'u2',x:'Давно',k:[],dn:false,ts:now-3*864e5,due:''},
@@ -24,7 +24,7 @@ const seed=(a)=>{const now=Date.now();
 };
 async function mk(browser,o){const ctx=await browser.newContext({viewport:{width:390,height:844},hasTouch:true});const p=await ctx.newPage();const e=[];
  p.on('pageerror',x=>e.push('pageerror: '+x.message));p.on('console',m=>{if(m.type()==='error')e.push('console: '+m.text())});
- await p.route('**/*',r=>{const u=r.request().url();if(u.includes('pastmetki.web.app/version.json'))return r.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:'{"version":"1.0.9","min":"1.0.0"}'});if(/manifest\.webmanifest|sw\.js|icon-\d+\.png/.test(u))return r.fulfill({status:200,contentType:'text/plain',body:''});if(u.includes('firebase-app.js'))return r.fulfill({contentType:'text/javascript',body:M.app});if(u.includes('firebase-auth.js'))return r.fulfill({contentType:'text/javascript',body:M.auth});if(u.includes('firebase-firestore.js'))return r.fulfill({contentType:'text/javascript',body:M.fs});if(u.includes('fonts.googleapis'))return r.fulfill({contentType:'text/css',body:''});if(u==='http://pm.test/')return r.fulfill({contentType:'text/html',body:html});return r.abort()});
+ await p.route('**/*',r=>{const u=r.request().url();if(u.includes('pastmetki.web.app/version.json'))return r.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:'{"version":"1.0.10","min":"1.0.0"}'});if(/manifest\.webmanifest|sw\.js|icon-\d+\.png/.test(u))return r.fulfill({status:200,contentType:'text/plain',body:''});if(u.includes('firebase-app.js'))return r.fulfill({contentType:'text/javascript',body:M.app});if(u.includes('firebase-auth.js'))return r.fulfill({contentType:'text/javascript',body:M.auth});if(u.includes('firebase-firestore.js'))return r.fulfill({contentType:'text/javascript',body:M.fs});if(u.includes('fonts.googleapis'))return r.fulfill({contentType:'text/css',body:''});if(u==='http://pm.test/')return r.fulfill({contentType:'text/html',body:html});return r.abort()});
  await p.addInitScript(seed,o);await p.goto('http://pm.test/');await p.waitForTimeout(800);return{p,e}}
 const N=(id,title,o={})=>({id,title,tasks:[],done:false,due:'',cat:'work',body:'',...o});
 (async()=>{
@@ -77,7 +77,7 @@ const N=(id,title,o={})=>({id,title,tasks:[],done:false,due:'',cat:'work',body:'
   await p.evaluate(()=>{window.__LN.length=0;window.__FB.db['chats/u1|u2'].last={x:'секретный текст',ts:Date.now()+5,f:'u2'}});
   await p.click('.hi .pbtn');await p.waitForTimeout(300);await p.click('dialog [data-a=fx]');await p.waitForTimeout(100);
   await p.evaluate(()=>0);
-  await p.click('nav [data-i=u]');await p.waitForTimeout(400);await p.click('[data-a=acs][data-i=set]');await p.waitForTimeout(400);await p.click('.sw[data-i=tm]');await p.waitForTimeout(600);
+  await p.click('nav [data-i=u]');await p.waitForTimeout(400);await p.click('[data-a=menu]');await p.waitForTimeout(300);await p.click('.mnu [data-a=acs][data-i=set]');await p.waitForTimeout(400);await p.click('.sw[data-i=tm]');await p.waitForTimeout(600);
   const m1=await p.evaluate(()=>window.__LN.filter(x=>x.title==='PastMetki'));
   ok('new message notification: generic text, no message content',m1.length>=1&&m1[0].body==='У вас новое сообщение'&&!JSON.stringify(m1).includes('секретный'),JSON.stringify(m1));
   ok('new message notification opens that chat',m1.length&&m1[0].extra&&m1[0].extra.k==='chat'&&m1[0].extra.v==='u2');

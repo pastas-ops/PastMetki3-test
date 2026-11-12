@@ -1,4 +1,4 @@
-// Тесты версии 1.0.9 (запуск из папки tests: node run109.js)
+// Тесты версии 1.0.10 (запуск из папки tests: node run109.js)
 const {chromium}=require('playwright');const fs=require('fs');
 const html=fs.readFileSync('../www/index.html','utf8');
 const M={app:fs.readFileSync('mock-app.js','utf8'),auth:fs.readFileSync('mock-auth.js','utf8'),fs:fs.readFileSync('mock-fs.js','utf8')};
@@ -21,7 +21,7 @@ const seed=(a)=>{const now=Date.now();
    Preferences:{set:async({key,value})=>{window.__PREF[key]=value},get:async({key})=>({value:window.__PREF[key]===undefined?null:window.__PREF[key]})},
    LocalNotifications:{schedule:async()=>{},getPending:async()=>({notifications:[]}),cancel:async()=>{},requestPermissions:async()=>({}),addListener:()=>{}}}};
 };
-let VJ={version:'1.0.9',min:'1.0.0',apk:'',page:'',notes:['a']};
+let VJ={version:'1.0.10',min:'1.0.0',apk:'',page:'',notes:['a']};
 async function mk(browser,o={}){const ctx=await browser.newContext({viewport:{width:390,height:844},hasTouch:true});const p=await ctx.newPage();const e=[];
  p.on('pageerror',x=>e.push('pageerror: '+x.message));p.on('console',m=>{if(m.type()==='error')e.push('console: '+m.text())});
  const vj=o.vj||VJ;
@@ -31,7 +31,7 @@ const N=(id,title,o={})=>({id,title,tasks:[],done:false,due:'',cat:'work',body:'
 (async()=>{
  const browser=await chromium.launch();const T=add(0);
  // ===== 1. quick-action chats =====
- {const {p,e}=await mk(browser,{s:{lv:'1.0.9'},notes:[N(1,'С планом',{due:T,tasks:[{text:'a',done:false}]})]});
+ {const {p,e}=await mk(browser,{s:{lv:'1.0.10'},notes:[N(1,'С планом',{due:T,tasks:[{text:'a',done:false}]})]});
   ok('home: arrow is the right-most control of a row, no pencil',await p.evaluate(()=>{const r=document.querySelector('.trow');return r.lastElementChild.dataset.a==='hexp'&&!r.querySelector('[data-a=hed]')}));
   await p.click('[data-a=hmc]');await p.waitForTimeout(300);
   const chips=await p.$$eval('dialog [data-a=hqs]',x=>x.map(y=>y.innerText));
@@ -52,7 +52,7 @@ const N=(id,title,o={})=>({id,title,tasks:[],done:false,due:'',cat:'work',body:'
   ok('chat quick action can be removed again',!(await p.evaluate(()=>window.__FB.db['users/u1'].s.hm.qs)).includes('c:u3')&&await p.$('.qb[data-q="c:u3"]')===null);
   ok('no JS errors (quick chats)',e.length===0,e.join(' | '));await p.close()}
  // ===== 2. invitations: pending / re-send =====
- {const {p,e}=await mk(browser,{s:{lv:'1.0.9'},extra:{'ginv/g1_u3':{gid:'g1',gn:'Клуб',ga:'',from:'u1',to:'u3',ts:5}}});
+ {const {p,e}=await mk(browser,{s:{lv:'1.0.10'},extra:{'ginv/g1_u3':{gid:'g1',gn:'Клуб',ga:'',from:'u1',to:'u3',ts:5}}});
   await p.click('nav [data-i=s]');await p.waitForTimeout(400);await p.click('[data-a=chat][data-i=g_g1]');await p.waitForTimeout(500);
   await p.click('header [data-a=ginfo] >> nth=0');await p.waitForTimeout(300);await p.click('dialog [data-a=ginvm]');await p.waitForTimeout(300);
   let t=await p.innerText('dialog');
@@ -67,16 +67,16 @@ const N=(id,title,o={})=>({id,title,tasks:[],done:false,due:'',cat:'work',body:'
   ok('no JS errors (invites)',e.length===0,e.join(' | '));await p.close()}
  // ===== 3. what's new =====
  {const {p,e}=await mk(browser,{notes:[]});await p.waitForTimeout(900);
-  ok('what\'s new opens after login for a new version',(await p.innerText('dialog[open]')).includes('Что нового в 1.0.9')&&(await p.innerText('dialog[open]')).includes('Устранены некоторые ошибки'));
+  ok('what\'s new opens after login for a new version',(await p.innerText('dialog[open]')).includes('Что нового в 1.0.10')&&(await p.innerText('dialog[open]')).includes('Устранены некоторые ошибки'));
   ok('what\'s new: auto-close countdown shown',(await p.innerText('dialog[open]')).includes('закроется через'));
-  ok('what\'s new: marked as seen for this version',(await p.evaluate(()=>window.__FB.db['users/u1'].s.lv))==='1.0.9');
+  ok('what\'s new: marked as seen for this version',(await p.evaluate(()=>window.__FB.db['users/u1'].s.lv))==='1.0.10');
   await p.waitForTimeout(2300);const ct=await p.innerText('#chgt');ok('countdown ticks down',/через (2[5-9]) с/.test(ct),ct);
   await p.click('dialog [data-a=fx] >> nth=0');await p.waitForTimeout(300);ok('closes with the cross',await p.$('dialog[open]')===null);
   await p.click('nav [data-i=u]');await p.waitForTimeout(500);
   await p.click('[data-a=chg]');await p.waitForTimeout(300);
-  ok('tap on version in settings reopens the same text (no countdown)',(await p.innerText('dialog[open]')).includes('Что нового в 1.0.9')&&await p.$('#chgt')===null);
+  ok('tap on version in settings reopens the same text (no countdown)',(await p.innerText('dialog[open]')).includes('Что нового в 1.0.10')&&await p.$('#chgt')===null);
   ok('no JS errors (what\'s new)',e.length===0,e.join(' | '));await p.close()}
- {const {p}=await mk(browser,{s:{lv:'1.0.9'},notes:[]});await p.waitForTimeout(500);ok('what\'s new is not shown again for the same version',await p.$('dialog[open]')===null);await p.close()}
+ {const {p}=await mk(browser,{s:{lv:'1.0.10'},notes:[]});await p.waitForTimeout(500);ok('what\'s new is not shown again for the same version',await p.$('dialog[open]')===null);await p.close()}
  // auto close after 30 s using a fake clock
  {const ctx=await browser.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();
   if(p.clock&&p.clock.install){await p.clock.install();
@@ -86,36 +86,36 @@ const N=(id,title,o={})=>({id,title,tasks:[],done:false,due:'',cat:'work',body:'
    ok('what\'s new closes itself after 30 s',open1&&!open2,open1+' '+open2)}
   await ctx.close()}
  // ===== 4. updates =====
- {const {p,e}=await mk(browser,{s:{lv:'1.0.9'},vj:{version:'1.0.10',min:'1.0.0',apk:'',page:'https://t.me/pm_files',notes:['Новая кнопка','Исправления']},notes:[]});await p.waitForTimeout(900);
-  ok('update available: dialog with version and notes',(await p.innerText('dialog[open]')).includes('Доступна версия 1.0.10')&&(await p.innerText('dialog[open]')).includes('Новая кнопка'));
+ {const {p,e}=await mk(browser,{s:{lv:'1.0.10'},vj:{version:'1.0.11',min:'1.0.0',apk:'',page:'https://t.me/pm_files',notes:['Новая кнопка','Исправления']},notes:[]});await p.waitForTimeout(900);
+  ok('update available: dialog with version and notes',(await p.innerText('dialog[open]')).includes('Доступна версия 1.0.11')&&(await p.innerText('dialog[open]')).includes('Новая кнопка'));
   await p.click('dialog [data-a=updgo]');await p.waitForTimeout(300);
   ok('download button opens the channel/page link',(await p.evaluate(()=>window.__OPEN))[0]==='https://t.me/pm_files');
   await p.click('dialog [data-a=updlater]');await p.waitForTimeout(300);
-  ok('"later" closes and remembers for today',await p.$('dialog[open]')===null&&(await p.evaluate(()=>window.__FB.db['users/u1'].s.sk)).startsWith('1.0.10@'));
-  await p.click('nav [data-i=u]');await p.waitForTimeout(400);await p.click('[data-a=acs][data-i=set]');await p.waitForTimeout(400);
-  await p.click('[data-a=updchk]');await p.waitForTimeout(800);ok('manual check shows update even after "later"',(await p.innerText('dialog[open]')).includes('Доступна версия 1.0.10'));
+  ok('"later" closes and remembers for today',await p.$('dialog[open]')===null&&(await p.evaluate(()=>window.__FB.db['users/u1'].s.sk)).startsWith('1.0.11@'));
+  await p.click('nav [data-i=u]');await p.waitForTimeout(400);await p.click('[data-a=menu]');await p.waitForTimeout(300);await p.click('.mnu [data-a=acs][data-i=set]');await p.waitForTimeout(400);
+  await p.click('[data-a=updchk]');await p.waitForTimeout(800);ok('manual check shows update even after "later"',(await p.innerText('dialog[open]')).includes('Доступна версия 1.0.11'));
   ok('no JS errors (update)',e.length===0,e.join(' | '));await p.close()}
- {const {p}=await mk(browser,{s:{lv:'1.0.9'},vj:{version:'1.0.10',min:'1.0.0',apk:'https://example.com/pm.apk',page:'',notes:[]},notes:[]});await p.waitForTimeout(700);
+ {const {p}=await mk(browser,{s:{lv:'1.0.10'},vj:{version:'1.0.11',min:'1.0.0',apk:'https://example.com/pm.apk',page:'',notes:[]},notes:[]});await p.waitForTimeout(700);
   await p.click('dialog [data-a=updgo]');await p.waitForTimeout(300);
-  const dl=await p.evaluate(()=>window.__DL);ok('direct APK link is handed to the native downloader',dl.length===1&&dl[0].url==='https://example.com/pm.apk'&&/PastMetki-1\.0\.10\.apk/.test(dl[0].name),JSON.stringify(dl));await p.close()}
- {const {p}=await mk(browser,{s:{lv:'1.0.9',au:0},vj:{version:'1.0.10',min:'1.0.0',apk:'',page:'x',notes:[]},notes:[]});await p.waitForTimeout(700);
+  const dl=await p.evaluate(()=>window.__DL);ok('direct APK link is handed to the native downloader',dl.length===1&&dl[0].url==='https://example.com/pm.apk'&&/PastMetki-1\.0\.11\.apk/.test(dl[0].name),JSON.stringify(dl));await p.close()}
+ {const {p}=await mk(browser,{s:{lv:'1.0.10',au:0},vj:{version:'1.0.11',min:'1.0.0',apk:'',page:'x',notes:[]},notes:[]});await p.waitForTimeout(700);
   ok('auto-check can be switched off (no dialog)',await p.$('dialog[open]')===null);await p.close()}
- {const {p}=await mk(browser,{s:{lv:'1.0.9'},vj:{version:'1.0.10',min:'1.0.10',apk:'',page:'https://t.me/pm_files',notes:['Важно']},notes:[]});await p.waitForTimeout(900);
+ {const {p}=await mk(browser,{s:{lv:'1.0.10'},vj:{version:'1.0.11',min:'1.0.11',apk:'',page:'https://t.me/pm_files',notes:['Важно']},notes:[]});await p.waitForTimeout(900);
   ok('old version is blocked: full-screen gate with download button',await p.$('#gate [data-a=updgo]')!==null&&(await p.innerText('#gate')).includes('Нужно обновить'));
   const top=await p.evaluate(()=>{const g=document.querySelector('#gate').getBoundingClientRect(),e=document.elementFromPoint(195,300);return{full:g.width>=380&&g.height>=800,covers:!!e.closest('#gate')}});
   ok('gate covers the whole app (nothing underneath is clickable)',top.full&&top.covers,JSON.stringify(top));
   await p.click('#gate [data-a=updgo]');await p.waitForTimeout(300);ok('gate: button opens the download link',(await p.evaluate(()=>window.__OPEN))[0]==='https://t.me/pm_files');await p.close()}
- {const {p}=await mk(browser,{s:{lv:'1.0.9'},vfail:true,notes:[]});await p.waitForTimeout(900);
+ {const {p}=await mk(browser,{s:{lv:'1.0.10'},vfail:true,notes:[]});await p.waitForTimeout(900);
   ok('no connection to the version file: app works normally',await p.$('#gate')===null&&await p.$('dialog[open]')===null&&(await p.innerText('body')).includes('Привет, Алексей'));await p.close()}
  // ===== 5. widget data path through Preferences =====
- {const {p,e}=await mk(browser,{s:{lv:'1.0.9'},notes:[N(1,'Сегодня',{due:T,tasks:[{text:'a',done:true},{text:'b',done:false}]}),N(2,'Просто',{})]});await p.waitForTimeout(1800);
+ {const {p,e}=await mk(browser,{s:{lv:'1.0.10'},notes:[N(1,'Сегодня',{due:T,tasks:[{text:'a',done:true},{text:'b',done:false}]}),N(2,'Просто',{})]});await p.waitForTimeout(1800);
   const pref=await p.evaluate(()=>window.__PREF);
   ok('widgets: notes/progress written through Preferences plugin',pref.pm_notes&&JSON.parse(pref.pm_notes).length===2&&JSON.parse(pref.pm_prog).p===50&&JSON.parse(pref.pm_prog).n===2,JSON.stringify(pref).slice(0,200));
   ok('widgets: background-sync credentials written (uid + token)',pref.pm_sy&&JSON.parse(pref.pm_sy).uid==='u1'&&JSON.parse(pref.pm_sy).rt==='rt123');
   ok('widgets: custom plugin path still used as well',(await p.evaluate(()=>window.__CAP.sent.length))>=1);
   await p.evaluate(()=>{window.__PREF.pm_ops=JSON.stringify([{id:2,done:true}])});await p.evaluate(()=>window.__CAP.handlers.appStateChange({isActive:true}));await p.waitForTimeout(700);
   ok('widget tick (from Preferences storage) is applied to the note',(await p.evaluate(()=>window.__FB.db['users/u1'].notes.find(n=>n.id===2).done))===true&&(await p.evaluate(()=>window.__PREF.pm_ops))==='[]');
-  await p.click('nav [data-i=u]');await p.waitForTimeout(400);await p.click('[data-a=acs][data-i=set]');await p.waitForTimeout(400);await p.click('[data-a=wdg]');await p.waitForTimeout(2200);
+  await p.click('nav [data-i=u]');await p.waitForTimeout(400);await p.click('[data-a=menu]');await p.waitForTimeout(300);await p.click('.mnu [data-a=acs][data-i=set]');await p.waitForTimeout(400);await p.click('[data-a=wdg]');await p.waitForTimeout(2200);
   const t=await p.innerText('body');ok('widget check button prints a readable status',t.includes('Виджеты:')&&t.includes('Preferences: есть')&&t.includes('виджетов на экране: 2'),t.slice(t.indexOf('Виджеты:'),t.indexOf('Виджеты:')+200));
   ok('no JS errors (widgets)',e.length===0,e.join(' | '));await p.close()}
  await browser.close();

@@ -35,6 +35,18 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/chk"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/pm_ck_green"
+            android:gravity="center"
+            android:text="✓"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/ps"
             android:layout_width="wrap_content"
             android:layout_height="0dp"

@@ -2,6 +2,7 @@ package com.pastmetki.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -42,15 +43,18 @@ public class NotesService extends RemoteViewsService {
             String s = o.optString("s");
             v.setTextViewText(R.id.s, s);
             v.setViewVisibility(R.id.s, s.length() > 0 ? View.VISIBLE : View.GONE);
-            v.setTextViewText(R.id.ck, done ? "☑" : "☐");
-            v.setTextColor(R.id.ck, done ? 0xFFFFC400 : 0xFFA6A6B8);
+            v.setTextViewText(R.id.ck, done ? "✓" : "");
+            v.setInt(R.id.ck, "setBackgroundResource", done ? R.drawable.pm_ck_on : R.drawable.pm_ck_off);
+            int col = 0xFFFFC400;
+            try { col = Color.parseColor(o.optString("c", "#FFC400")); } catch (Exception e) { }
+            v.setInt(R.id.bar, "setBackgroundColor", done ? 0x55FFFFFF : col);
             long id = o.optLong("i");
             Intent open = new Intent();
             open.setData(Uri.parse("pastmetki://note/" + id));
             v.setOnClickFillInIntent(R.id.body, open);
             Intent tg = new Intent();
             tg.setData(Uri.parse("pastmetki://toggle/" + id));
-            v.setOnClickFillInIntent(R.id.ck, tg);
+            v.setOnClickFillInIntent(R.id.ckw, tg);
             return v;
         }
 

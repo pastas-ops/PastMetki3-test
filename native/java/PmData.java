@@ -38,7 +38,7 @@ public class PmData {
             @Override public void onSharedPreferenceChanged(SharedPreferences p, String key) {
                 if (key == null) return;
                 if (key.equals("pm_sy")) { applySync(app); return; }
-                if (key.equals("pm_chats") || key.equals("pm_notes") || key.equals("pm_dls") || key.equals("pm_prog")) {
+                if (key.equals("pm_chats") || key.equals("pm_notes") || key.equals("pm_dls") || key.equals("pm_prog") || key.equals("pm_qa")) {
                     H.removeCallbacks(RF);
                     H.postDelayed(RF, 350);
                 }
@@ -77,9 +77,9 @@ public class PmData {
     }
 
     // Кэш для виджетов: приложение (WebView) кладёт сюда снимок данных из Firestore.
-    static void save(Context c, String chats, String notes, String dls, String prog) {
-        sp(c).edit().putString("chats", chats).putString("notes", notes).putString("dls", dls).putString("prog", prog).putLong("ts", System.currentTimeMillis()).apply();
-        cs(c).edit().putString("pm_chats", chats).putString("pm_notes", notes).putString("pm_dls", dls).putString("pm_prog", prog).apply();
+    static void save(Context c, String chats, String notes, String dls, String prog, String qa) {
+        sp(c).edit().putString("chats", chats).putString("notes", notes).putString("dls", dls).putString("prog", prog).putString("qa", qa).putLong("ts", System.currentTimeMillis()).apply();
+        cs(c).edit().putString("pm_chats", chats).putString("pm_notes", notes).putString("pm_dls", dls).putString("pm_prog", prog).putString("pm_qa", qa).apply();
         refresh(c);
     }
 
@@ -88,6 +88,10 @@ public class PmData {
         if (v == null) v = sp(c).getString(k, null);
         if (v == null) v = "prog".equals(k) ? "{}" : "[]";
         return v;
+    }
+
+    static JSONArray qa(Context c) {
+        try { return new JSONArray(get(c, "qa")); } catch (Exception e) { return new JSONArray(); }
     }
 
     static JSONObject prog(Context c) {
@@ -101,7 +105,7 @@ public class PmData {
             int[] ids = m.getAppWidgetIds(new ComponentName(c, k));
             if (ids.length > 0) m.notifyAppWidgetViewDataChanged(ids, R.id.list);
         }
-        Class<?>[] plain = new Class<?>[] { ProgressWidget.class, TodayWidget.class };
+        Class<?>[] plain = new Class<?>[] { ProgressWidget.class, TodayWidget.class, Quick22Widget.class, Quick33Widget.class };
         for (Class<?> k : plain) {
             int[] ids = m.getAppWidgetIds(new ComponentName(c, k));
             if (ids.length > 0) {
